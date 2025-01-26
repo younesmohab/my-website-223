@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eissa Python</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #d9d9d9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #1d9bf0;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header img {
+            height: 30px;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #444;
+            border-radius: 20px;
+            background-color: #000;
+            color: #d9d9d9;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #1d9bf0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1a8cd8;
+        }
+
+        .post {
+            background: #161616;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #444;
+        }
+
+        .post p {
+            margin: 0;
+            color: #d9d9d9;
+        }
+
+        .post .time {
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: #71767b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="Eissa Python Logo">
+        <h1>Eissa Python</h1>
+    </header>
+
+    <div class="container">
+        <div class="input-section">
+            <input type="text" id="postInput" placeholder="What’s happening?">
+            <button onclick="addPost()">Post</button>
+        </div>
+        <div id="posts"></div>
+    </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+            .then(reg => console.log('Service Worker registered!', reg))
+            .catch(err => console.log('Service Worker registration failed:', err));
+        }
+
+        function addPost() {
+            const postInput = document.getElementById('postInput');
+            const postsContainer = document.getElementById('posts');
+
+            if (postInput.value.trim()) {
+                const postDiv = document.createElement('div');
+                postDiv.className = 'post';
+
+                const postContent = document.createElement('p');
+                postContent.textContent = postInput.value;
+
+                const postTime = document.createElement('p');
+                postTime.className = 'time';
+                postTime.textContent = new Date().toLocaleString();
+
+                postDiv.appendChild(postContent);
+                postDiv.appendChild(postTime);
+
+                postsContainer.prepend(postDiv);
+                postInput.value = '';
+            }
+        }
+    </script>
+</body>
+</html>
